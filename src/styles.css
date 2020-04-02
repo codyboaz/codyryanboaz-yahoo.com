@@ -1,0 +1,23 @@
+*, html, body {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book-info {
+  flex-basis: 33.33%
+}
+
+.book-list img {
+  height: 400px;
+  width: auto;
+}
+
