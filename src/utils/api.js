@@ -1,5 +1,7 @@
 const API_KEY = process.env.API_KEY
 
+console.log(process.env.API_KEY)
+
 export function fetchBooks(category) {
   return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${category}.json?api-key=${API_KEY}`)
     .then((response) => response.json())
