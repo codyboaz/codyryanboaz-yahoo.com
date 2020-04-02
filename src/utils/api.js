@@ -1,5 +1,7 @@
+const API_KEY = process.env.API_KEY
+
 export function fetchBooks(category) {
-  return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${category}.json?api-key=AT8EuM9J6rKzhH4bQuQWhGAvTR9jH1aJ`)
+  return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${category}.json?api-key=${API_KEY}`)
     .then((response) => response.json())
     .then((data) => data.results.books)
     .catch((err) => {
@@ -8,7 +10,7 @@ export function fetchBooks(category) {
 }
 
 export function fetchCategories() {
-  return fetch("https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=AT8EuM9J6rKzhH4bQuQWhGAvTR9jH1aJ")
+  return fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${API_KEY}`)
     .then((response) => response.json())
     .then((data) => data.results.slice(25))
     .catch((err) => {
