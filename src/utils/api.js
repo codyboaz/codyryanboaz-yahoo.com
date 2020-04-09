@@ -1,7 +1,9 @@
-const API_KEY = process.env.API_KEY
+const API_KEY_NY_TIMES = process.env.API_KEY_NY_TIMES
+const API_KEY_GOOGLE_BOOKS = process.env.API_KEY_GOOGLE_BOOKS
+const categories = ['combined-print-and-e-book-fiction', 'combined-print-and-e-book-nonfiction', 'animals', 'business-books', 'celebrities', 'education', 'food-and-fitness', 'health', 'science', 'sports', 'travel']
 
 export function fetchBooks(category) {
-  return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${category}.json?api-key=${API_KEY}`)
+  return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${category}.json?api-key=${API_KEY_NY_TIMES}`)
     .then((response) => response.json())
     .then((data) => data.results.books)
     .catch((err) => {
@@ -10,9 +12,20 @@ export function fetchBooks(category) {
 }
 
 export function fetchCategories() {
-  return fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${API_KEY}`)
+  return fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${API_KEY_NY_TIMES}`)
     .then((response) => response.json())
-    .then((data) => data.results.slice(25))
+    .then((data) => {
+      return data.results.reduce((total, result) => {
+        if (categories.includes(result.list_name_encoded)) {
+          if (result.list_name.indexOf('Combined Print and E-Book') >= 0) {
+            total.push({ list_name: result.list_name.slice('Combined Print and E-Book'.length + 1), list_name_encoded: result.list_name_encoded })
+          } else {
+            total.push({ list_name: result.list_name, list_name_encoded: result.list_name_encoded })
+          }
+        }
+        return total
+      }, [])
+    })
     .catch((err) => {
       throw new Error(err)
     });
@@ -25,7 +38,7 @@ export function fetchBookInfo(isbns) {
     })
   }
   return Promise.all(isbns.map((isbn) => {
-    return fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn.isbn13}`)
+    return fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn.isbn13}&key=${API_KEY_GOOGLE_BOOKS}`)
       .then((res) => res.json())
   }))
 

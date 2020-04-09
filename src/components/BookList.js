@@ -8,6 +8,7 @@ export default class BookList extends React.Component {
 
     this.state = {
       categories: null,
+      category: null,
       books: null,
       status: 'fetching'
     }
@@ -37,16 +38,27 @@ export default class BookList extends React.Component {
   }
 
   getBooks(category) {
-    fetchBooks(category)
-      .then((books) => {
-        this.setState({
-          books
-        })
+    if (this.state.books && this.state.books[category]) {
+      this.setState({
+        category
       })
+    } else {
+      fetchBooks(category)
+        .then((booksData) => {
+          this.setState(({ books }) => {
+            return {
+              books: {
+                ...books,
+                [category]: booksData
+              },
+              category
+            }
+          })
+        })
+    }
   }
 
   updateBooks(e) {
-    console.log('here', e.target.value)
     this.getBooks(e.target.value)
   }
 
@@ -69,7 +81,7 @@ export default class BookList extends React.Component {
         {this.state.books
           ?
           <ul className='book-list'>
-            {this.state.books.map((book) => (
+            {this.state.books[this.state.category].map((book) => (
               <li key={book.book_uri} className='book-info'>
                 <Link to={{ pathname: '/book-info', state: { isbns: book.isbns } }}>
                   <p>{book.title}</p>

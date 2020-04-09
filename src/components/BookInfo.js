@@ -17,7 +17,6 @@ export default class BookInfo extends React.Component {
       .then((isbnData) => {
 
         const bookInfo = this.getBookInfo(isbnData)
-        console.log('info', bookInfo)
         this.setState({
           status: 'ready',
           bookInfo
@@ -37,7 +36,6 @@ export default class BookInfo extends React.Component {
       return <h1>Loading</h1>
     }
     const bookInfo = this.state.bookInfo.items[0].volumeInfo.title
-    console.log('info', bookInfo)
     return (
       <h1>{bookInfo}</h1>
     )
