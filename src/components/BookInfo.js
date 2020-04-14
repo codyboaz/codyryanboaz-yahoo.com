@@ -12,6 +12,7 @@ export default class BookInfo extends React.Component {
   }
   componentDidMount() {
     const { isbns } = this.props.location.state
+    console.log(isbns)
 
     fetchBookInfo(isbns)
       .then((isbnData) => {
@@ -35,9 +36,17 @@ export default class BookInfo extends React.Component {
     if (this.state.status === 'loading') {
       return <h1>Loading</h1>
     }
-    const bookInfo = this.state.bookInfo.items[0].volumeInfo.title
+    const { title, authors, description, pageCount, averageRating, ratingsCount, categories, imageLinks: { thumbnail } } = this.state.bookInfo.items[0].volumeInfo
     return (
-      <h1>{bookInfo}</h1>
+      <div className='book-info-container'>
+        <h1>{title}</h1>
+        <p>Rating: {averageRating} ({ratingsCount})</p>
+        <img src={thumbnail} alt={title} />
+        <p>Written by: {authors}</p>
+        <p>PageCount: {pageCount}</p>
+        <p>{description}</p>
+        <p>Categories: {categories.map((category) => category)}</p>
+      </div>
     )
   }
 }
