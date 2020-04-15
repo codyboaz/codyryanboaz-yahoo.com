@@ -6,7 +6,8 @@ export default class BookInfo extends React.Component {
     super(props)
     this.state = {
       status: 'loading',
-      bookInfo: null
+      bookInfo: null,
+      bookInfoFound: false
     }
     this.getBookInfo = this.getBookInfo.bind(this)
   }
@@ -18,17 +19,18 @@ export default class BookInfo extends React.Component {
       .then((isbnData) => {
 
         const bookInfo = this.getBookInfo(isbnData)
+        console.log(bookInfo.items[0].volumeInfo.title === 'Book info not found')
         this.setState({
           status: 'ready',
-          bookInfo
+          bookInfo,
+          bookInfoFound: bookInfo.items[0].volumeInfo.title !== 'Book info not found' ? true : false
         })
       })
   }
 
   getBookInfo(isbnData) {
-    let bookInfo = isbnData.find((isbn) => isbn.totalItems === 1);
-
-    bookInfo = bookInfo === undefined ? { items: [{ volumeInfo: { title: 'Book info not found' } }] } : bookInfo
+    let bookInfo = isbnData.find((isbn) => isbn.totalItems === 1)
+    bookInfo = bookInfo == undefined ? { items: [{ volumeInfo: { title: 'Book info not found' } }] } : bookInfo
     return bookInfo;
   }
 
@@ -36,7 +38,11 @@ export default class BookInfo extends React.Component {
     if (this.state.status === 'loading') {
       return <h1>Loading</h1>
     }
+    if (!this.state.bookInfoFound) {
+      return <h1>{this.state.bookInfo.items[0].volumeInfo.title}</h1>
+    }
     const { title, authors, description, pageCount, averageRating, ratingsCount, categories, imageLinks: { thumbnail } } = this.state.bookInfo.items[0].volumeInfo
+    console.log(this.state.bookInfoFound)
     return (
       <div className='book-info-container'>
         <h1>{title}</h1>

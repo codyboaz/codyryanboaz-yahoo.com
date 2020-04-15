@@ -30,7 +30,8 @@ class App extends React.Component {
       .then((categories) => {
         this.setState({
           categories,
-          status: 'loaded'
+          status: 'loaded',
+          currentCategory: categories[0].list_name_encoded
         }, this.getBooks(categories[0].list_name_encoded))
       })
       .catch((error) => {
