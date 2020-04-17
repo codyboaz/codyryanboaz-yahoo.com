@@ -8,14 +8,8 @@ export default class BookList extends React.Component {
   }
 
   render() {
-    const { updateBooks, categories, currentCategory, books, status } = this.props
-    console.log(currentCategory)
-    if (status === 'fetching') {
-      return <h1>Fetching data</h1>
-    }
-    if (status === 'error') {
-      return <h1>Error fetching data</h1>
-    }
+    const { updateBooks, updateReads, categories, currentCategory, books } = this.props
+
     return (
       <React.Fragment>
         <select
@@ -47,9 +41,9 @@ export default class BookList extends React.Component {
                 <div className='add-to-dropdown'>
                   <button>+</button>
                   <ul>
-                    <li>Read</li>
-                    <li>Want To Read</li>
-                    <li>Not Interested</li>
+                    <li onClick={() => updateReads('read', book)}>Read</li>
+                    <li onClick={() => updateReads('wantToRead', book)}>Want To Read</li>
+                    <li onClick={() => updateReads('currentlyReading', book)}>Currently Reading</li>
                   </ul>
                 </div>
               </li>

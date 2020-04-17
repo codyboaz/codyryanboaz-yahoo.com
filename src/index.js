@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import BookList from './components/BookList'
+import TabContainer from './components/TabContainer'
 import BookInfo from './components/BookInfo'
 import { fetchBooks, fetchCategories } from './utils/api'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -14,12 +14,24 @@ class App extends React.Component {
       categories: null,
       currentCategory: null,
       books: null,
-      status: 'fetching'
+      status: 'fetching',
+      read: [],
+      wantToRead: [],
+      currentlyReading: [],
+      tabs: [
+        { name: 'Find Books', value: 'find' },
+        { name: 'Read', value: 'read' },
+        { name: 'Currently Reading', value: 'currentlyReading' },
+        { name: 'Want To Read', value: 'wantToRead' }
+      ],
+      currentTab: 'find'
     }
 
     this.getBooks = this.getBooks.bind(this)
     this.updateBooks = this.updateBooks.bind(this)
     this.getCategories = this.getCategories.bind(this)
+    this.updateReads = this.updateReads.bind(this)
+    this.updateCurrentTab = this.updateCurrentTab.bind(this)
   }
   componentDidMount() {
     this.getCategories()
@@ -40,6 +52,30 @@ class App extends React.Component {
           status: 'error'
         })
       })
+  }
+
+  updateReads(readType, book) {
+    for (const read of this.state[readType]) {
+      if (read.book_uri === book.book_uri) {
+        alert('Book Already Exists in that Category')
+        return
+      }
+    }
+    this.setState((prevState) => {
+      return {
+        [readType]: [
+          ...prevState[readType],
+          book
+        ]
+      }
+    })
+  }
+
+  updateCurrentTab(tabValue) {
+    console.log(tabValue)
+    this.setState({
+      currentTab: tabValue
+    })
   }
 
   getBooks(currentCategory) {
@@ -67,20 +103,40 @@ class App extends React.Component {
     this.getBooks(e.target.value)
   }
 
+  getTabData() {
+    const currentTab = this.state.currentTab
+    if (currentTab === 'read') {
+      return this.state.read
+    } else if (currentTab === 'currentlyReading') {
+      return this.state.currentlyReading
+    } else if (currentTab === 'wantToRead') {
+      return this.state.wantToRead
+    }
+  }
+
   render() {
-    const { categories, currentCategory, books, status } = this.state
+    const { categories, currentCategory, books, status, currentTab, read, wantToRead, currentlyReading } = this.state
+    const currentTabData = this.getTabData()
+
     return (
       <div className='container'>
         <Router>
           <Route
             exact path='/'
             component={() => (
-              <BookList
+              <TabContainer
                 updateBooks={this.updateBooks}
+                updateReads={this.updateReads}
+                updateCurrentTab={this.updateCurrentTab}
+                read={read}
+                wantToRead={wantToRead}
+                currentlyReading={currentlyReading}
                 categories={categories}
                 currentCategory={currentCategory}
                 books={books}
                 status={status}
+                currentTab={currentTab}
+                currentTabData={currentTabData}
               />
             )}
           />

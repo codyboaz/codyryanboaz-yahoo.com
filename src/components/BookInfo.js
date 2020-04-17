@@ -13,13 +13,10 @@ export default class BookInfo extends React.Component {
   }
   componentDidMount() {
     const { isbns } = this.props.location.state
-    console.log(isbns)
 
     fetchBookInfo(isbns)
       .then((isbnData) => {
-
         const bookInfo = this.getBookInfo(isbnData)
-        console.log(bookInfo.items[0].volumeInfo.title === 'Book info not found')
         this.setState({
           status: 'ready',
           bookInfo,
@@ -42,7 +39,7 @@ export default class BookInfo extends React.Component {
       return <h1>{this.state.bookInfo.items[0].volumeInfo.title}</h1>
     }
     const { title, authors, description, pageCount, averageRating, ratingsCount, categories, imageLinks: { thumbnail } } = this.state.bookInfo.items[0].volumeInfo
-    console.log(this.state.bookInfoFound)
+
     return (
       <div className='book-info-container'>
         <h1>{title}</h1>
