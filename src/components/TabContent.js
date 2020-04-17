@@ -22,8 +22,8 @@ export default class TabContainer extends React.Component {
                   <button>+</button>
                   <ul>
                     <li onClick={() => updateReads('read', tabData)}>Read</li>
-                    <li onClick={() => updateReads('wantToRead', tabData)}>Want To Read</li>
                     <li onClick={() => updateReads('currentlyReading', tabData)}>Currently Reading</li>
+                    <li onClick={() => updateReads('wantToRead', tabData)}>Want To Read</li>
                   </ul>
                 </div>
               </li>
