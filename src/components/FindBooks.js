@@ -41,9 +41,9 @@ export default class BookList extends React.Component {
                 <div className='add-to-dropdown'>
                   <button>+</button>
                   <ul>
-                    <li onClick={() => updateReads('read', book)}>Read</li>
-                    <li onClick={() => updateReads('wantToRead', book)}>Want To Read</li>
                     <li onClick={() => updateReads('currentlyReading', book)}>Currently Reading</li>
+                    <li onClick={() => updateReads('wantToRead', book)}>Want To Read</li>
+                    <li onClick={() => updateReads('read', book)}>Read</li>
                   </ul>
                 </div>
               </li>

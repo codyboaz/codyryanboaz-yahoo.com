@@ -18,9 +18,9 @@ export default class TabContainer extends React.Component {
       <React.Fragment>
         <ul>
           <li onClick={() => updateCurrentTab('find')}>Find Books</li>
-          <li onClick={() => updateCurrentTab('read')}>Read</li>
           <li onClick={() => updateCurrentTab('currentlyReading')}>Currently Reading</li>
           <li onClick={() => updateCurrentTab('wantToRead')}>Want To Read</li>
+          <li onClick={() => updateCurrentTab('read')}>Read</li>
         </ul>
         {
           currentTab === 'find'
