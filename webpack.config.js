@@ -11,7 +11,8 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, use: 'babel-loader' },
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] }
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.(pdf|png|svg|jpg|gif)$/, use: 'file-loader?name=[name].[ext]' }
     ]
   },
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',

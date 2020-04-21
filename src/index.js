@@ -20,9 +20,9 @@ class App extends React.Component {
       currentlyReading: [],
       tabs: [
         { name: 'Find Books', value: 'find' },
-        { name: 'Read', value: 'read' },
         { name: 'Currently Reading', value: 'currentlyReading' },
-        { name: 'Want To Read', value: 'wantToRead' }
+        { name: 'Want To Read', value: 'wantToRead' },
+        { name: 'Read', value: 'read' }
       ],
       currentTab: 'find'
     }
@@ -72,7 +72,6 @@ class App extends React.Component {
   }
 
   updateCurrentTab(tabValue) {
-    console.log(tabValue)
     this.setState({
       currentTab: tabValue
     })
@@ -115,7 +114,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { categories, currentCategory, books, status, currentTab, read, wantToRead, currentlyReading } = this.state
+    const { categories, currentCategory, books, status, currentTab, read, wantToRead, currentlyReading, tabs } = this.state
     const currentTabData = this.getTabData()
 
     return (
@@ -137,6 +136,7 @@ class App extends React.Component {
                 status={status}
                 currentTab={currentTab}
                 currentTabData={currentTabData}
+                tabs={tabs}
               />
             )}
           />
