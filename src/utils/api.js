@@ -4,8 +4,18 @@ const categories = ['combined-print-and-e-book-fiction', 'combined-print-and-e-b
 
 export function fetchBooks(category) {
   return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${category}.json?api-key=${API_KEY_NY_TIMES}`)
-    .then((response) => response.json())
-    .then((data) => data.results.books)
+    .then((response) => {
+      if (response.status === 429) {
+        return { status: 'too-many-requests' }
+      }
+      return response.json()
+    })
+    .then((data) => {
+      if (data.status === 'too-many-requests') {
+        return data
+      }
+      return data.results.books
+    })
     .catch((err) => {
       throw new Error(err)
     });
@@ -13,8 +23,16 @@ export function fetchBooks(category) {
 
 export function fetchCategories() {
   return fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${API_KEY_NY_TIMES}`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 429) {
+        return { status: 'too-many-requests' }
+      }
+      return response.json()
+    })
     .then((data) => {
+      if (data.status === 'too-many-requests') {
+        return data
+      }
       return data.results.reduce((total, result) => {
         if (categories.includes(result.list_name_encoded)) {
           if (result.list_name.indexOf('Combined Print and E-Book') >= 0) {

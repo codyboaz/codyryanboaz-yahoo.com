@@ -1,9 +1,20 @@
 *, html, body {
   box-sizing: border-box;
+  font-family: goudy-bookletter-1911, serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
   margin: 0;
+}
+
+.loading-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
@@ -22,26 +33,7 @@ body {
   margin: 0;
 }
 
-.main-nav-items li {
- list-style: none;
- font-size: 1.25rem;
- flex-basis: 20%;
-}
-
-.main-nav-items li a {
-  text-decoration: none;
-  color: #342103;
- }
-
- .main-nav-items li a:hover,  .main-nav-items li a:focus {
-  color: #E56500;
- }
-
-.main-nav-items li a.active {
-  color: #E56500;
- }
-
- .main-nav-logo-container {
+.main-nav-logo-container {
   display: flex;
 }
 
@@ -49,9 +41,59 @@ body {
   height: 50px;
 }
 
-.main-nav-tab-items {
-  cursor: pointer;
+.tabs {
+  display: flex;
+  margin: 0;
+  padding: 0;
 }
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 25%;
+  height: 50px;
+  font-size: 1.25rem;
+  list-style: none;
+  border: 1px solid #342103;
+}
+
+.tab-item:not(:last-child) {
+  border-right: none;
+}
+
+.tab-item a {
+  line-height: 50px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: #342103;
+ }
+
+ .tab-item a.active, .tab-item a:hover,  .tab-item a:focus {
+  color: #E56500;
+ }
+
+ .find-books {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+ }
+
+ .find-books-categories {
+  font-size: 1.1rem;
+}
+
+ .find-books-search-label {
+   font-size: 1.1rem;
+ }
+
+ .find-books-search {
+  margin-left: 10px;
+  height: 25px;
+  width: 200px;
+  font-size: 1.1rem;
+ }
 
 .book-list {
   display: flex;

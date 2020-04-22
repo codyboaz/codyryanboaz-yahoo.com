@@ -1,6 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import TabContainer from './components/TabContainer'
+import Loading from './components/Loading'
+import Nav from './components/Nav'
+import Tabs from './components/Tabs'
+import FindBooks from './components/FindBooks'
+import TabContent from './components/TabContent'
 import BookInfo from './components/BookInfo'
 import { fetchBooks, fetchCategories } from './utils/api'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -33,6 +37,7 @@ class App extends React.Component {
     this.updateReads = this.updateReads.bind(this)
     this.updateCurrentTab = this.updateCurrentTab.bind(this)
   }
+
   componentDidMount() {
     this.getCategories()
   }
@@ -40,11 +45,18 @@ class App extends React.Component {
   getCategories() {
     fetchCategories()
       .then((categories) => {
-        this.setState({
-          categories,
-          status: 'loaded',
-          currentCategory: categories[0].list_name_encoded
-        }, this.getBooks(categories[0].list_name_encoded))
+        if (categories.status === 'too-many-requests') {
+          this.setState({
+            status: 'too-many-requests'
+          })
+        } else {
+          this.setState({
+            categories,
+            status: 'loaded',
+            currentCategory: categories[0].list_name_encoded
+          }, this.getBooks(categories[0].list_name_encoded))
+        }
+
       })
       .catch((error) => {
         console.warn('Error fetching categories: ', error)
@@ -54,7 +66,8 @@ class App extends React.Component {
       })
   }
 
-  updateReads(readType, book) {
+  updateReads(readType, book, e) {
+    e.preventDefault()
     for (const read of this.state[readType]) {
       if (read.book_uri === book.book_uri) {
         alert('Book Already Exists in that Category')
@@ -85,15 +98,21 @@ class App extends React.Component {
     } else {
       fetchBooks(currentCategory)
         .then((booksData) => {
-          this.setState(({ books }) => {
-            return {
-              books: {
-                ...books,
-                [currentCategory]: booksData
-              },
-              currentCategory
-            }
-          })
+          if (booksData.status === 'too-many-requests') {
+            this.setState({
+              status: 'too-many-requests'
+            })
+          } else {
+            this.setState(({ books }) => {
+              return {
+                books: {
+                  ...books,
+                  [currentCategory]: booksData
+                },
+                currentCategory
+              }
+            })
+          }
         })
     }
   }
@@ -114,35 +133,49 @@ class App extends React.Component {
   }
 
   render() {
-    const { categories, currentCategory, books, status, currentTab, read, wantToRead, currentlyReading, tabs } = this.state
+    if (this.state.status === 'fetching') {
+      return <Loading />
+    }
+    if (this.state.status === 'too-many-requests') {
+      return <h1>Too many requests. Please wait a few seconds and try again</h1>
+    }
+    if (this.state.status === 'error') {
+      return <h1>Error fetching data</h1>
+    }
+    const { categories, currentCategory, books, currentTab, tabs } = this.state
     const currentTabData = this.getTabData()
 
     return (
-      <div className='container'>
-        <Router>
+      <Router>
+        <div className='container'>
+          <Nav />
+          <Tabs
+            tabs={tabs}
+            currentTab={currentTab}
+            updateCurrentTab={this.updateCurrentTab}
+          />
           <Route
             exact path='/'
             component={() => (
-              <TabContainer
-                updateBooks={this.updateBooks}
-                updateReads={this.updateReads}
-                updateCurrentTab={this.updateCurrentTab}
-                read={read}
-                wantToRead={wantToRead}
-                currentlyReading={currentlyReading}
-                categories={categories}
-                currentCategory={currentCategory}
-                books={books}
-                status={status}
-                currentTab={currentTab}
-                currentTabData={currentTabData}
-                tabs={tabs}
-              />
+              currentTab === 'find'
+                ?
+                <FindBooks
+                  updateBooks={this.updateBooks}
+                  updateReads={this.updateReads}
+                  categories={categories}
+                  currentCategory={currentCategory}
+                  books={books}
+                />
+                :
+                <TabContent
+                  currentTabData={currentTabData}
+                  updateReads={this.updateReads}
+                />
             )}
           />
           <Route path='/book-info' component={BookInfo} />
-        </Router>
-      </div>
+        </div>
+      </Router>
     )
   }
 }
