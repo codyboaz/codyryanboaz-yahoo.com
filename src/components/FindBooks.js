@@ -29,27 +29,32 @@ export default class FindBooks extends React.Component {
     return (
       <React.Fragment>
         <div className='find-books'>
-          <select
-            className='find-books-categories'
-            value={currentCategory}
-            disabled={categories ? null : true}
-            onChange={updateBooks}
-          >
-            {categories
-              ?
-              categories.map((category) => (
-                <option
-                  key={category.list_name_encoded}
-                  value={category.list_name_encoded}
-                >{category.list_name}</option>
-              ))
-              :
-              <option>Loading Categories</option>
-            }
-          </select>
-          <label className='find-books-search-label'>
+          <label htmlFor='bookCategories'>
+            Change Category:
+            <select
+              id='bookCategories'
+              className='find-books-categories'
+              value={currentCategory}
+              disabled={categories ? null : true}
+              onChange={updateBooks}
+            >
+              {categories
+                ?
+                categories.map((category) => (
+                  <option
+                    key={category.list_name_encoded}
+                    value={category.list_name_encoded}
+                  >{category.list_name}</option>
+                ))
+                :
+                <option>Loading Categories</option>
+              }
+            </select>
+          </label>
+          <label htmlFor='searchBooks' className='find-books-search-label'>
             Search By Title:
             <input
+              id='searchBooks'
               className='find-books-search'
               type='text'
               value={this.state.searchValue}

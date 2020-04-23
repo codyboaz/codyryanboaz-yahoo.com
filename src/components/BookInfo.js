@@ -43,12 +43,14 @@ export default class BookInfo extends React.Component {
     return (
       <div className='book-info-container'>
         <h1>{title}</h1>
-        <p>Rating: {averageRating} ({ratingsCount})</p>
+        <p>Rating: {averageRating ? `${averageRating} (${ratingsCount})` : 'No Ratings Yet'}</p>
         <img src={thumbnail} alt={title} />
         <p>Written by: {authors}</p>
         <p>PageCount: {pageCount}</p>
         <p>{description}</p>
-        <p>Categories: {categories.map((category) => category)}</p>
+        {categories &&
+          <p>Categories: {categories.map((category) => category)}</p>
+        }
       </div>
     )
   }

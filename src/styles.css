@@ -9,6 +9,42 @@ body {
   margin: 0;
 }
 
+.white {
+  color: #fff;
+}
+
+.cream {
+  color: #FDF7EC;
+}
+
+.blue {
+  color: #0094e5;
+}
+
+.yellow {
+  color: #e5ab00;
+}
+
+.orange {
+  color: #E56500
+}
+
+.red {
+  color: #e5001a
+}
+
+.gray {
+  color: #737373
+}
+
+.brown {
+  color: #342103;
+}
+
+.black {
+  color: #000;
+}
+
 .loading-container {
   height: 100vh;
   width: 100vw;
@@ -28,17 +64,19 @@ body {
 
 .main-nav-items {
   display: flex;
+  justify-content: center;
   align-items: center;
   height: 80px;
   margin: 0;
+  padding: 0;
 }
 
 .main-nav-logo-container {
-  display: flex;
+  list-style: none;
 }
 
 .main-nav-logo {
-  height: 50px;
+  height: 70px;
 }
 
 .tabs {
@@ -77,14 +115,24 @@ body {
  .find-books {
   display: flex;
   justify-content: space-between;
-  margin: 20px;
+  margin: 30px 20px;
  }
+
+ .book-list a {
+   color: #000;
+   text-decoration: none;
+ }
+
+ .book-list h3 {
+  font-size: 1.35rem;
+  margin: .75rem 0;
+}
 
  .find-books-categories {
   font-size: 1.1rem;
 }
 
- .find-books-search-label {
+ .find-books label {
    font-size: 1.1rem;
  }
 
@@ -95,17 +143,75 @@ body {
   font-size: 1.1rem;
  }
 
+ .find-books-categories { 
+   margin-left: 10px;
+ }
+
 .book-list {
   display: flex;
   flex-wrap: wrap;
 }
 
 .book-info {
-  flex-basis: 33.33%
+  flex-basis: 33.33%;
+  list-style: none;
+  text-align: center;
+  position: relative;
+  margin-bottom: 1.75rem;
 }
 
 .book-list img {
-  height: 400px;
-  width: 300px;
+  height: 495px;
+  width: 328px;
+}
+
+.add-to-dropdown {
+  position: absolute;
+  top: 445px;
+  left: 310px;
+  text-align: left;
+  width: 50%;
+  margin: 0;
+  float: right;
+  z-index: 2;
+}
+
+.add-to-dropdown-button {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 2px solid #342103;
+  background: #FDF7EC;
+  color: #342103;
+  font-size: 20px;
+  opacity: 0.75;
+}
+
+.add-to-dropdown-button:hover {
+  opacity: 1;
+}
+
+.add-to-dropdown-button:after {
+  content:'+';
+  font-family: serif;
+}
+
+.add-to-dropdown-button.open:after {
+  content:'-';
+  font-family: serif;
+}
+
+.add-to-dropdown-items {
+  background-color: white;
+  display: none;
+  padding: 0;
+  position: absolute;
+  top: 95%;
+  right: 95%;
+  width: 100%;
+}
+
+.add-to-dropdown-items.open {
+  display: block;
 }
 
