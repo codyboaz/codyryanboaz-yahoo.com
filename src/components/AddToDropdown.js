@@ -26,6 +26,7 @@ export default class AddToDropdown extends React.Component {
         <button
           className='add-to-dropdown-button'
           onClick={this.updateShowDropdown}
+          aria-label='Add book to reading list'
         ></button>
         <ul className={showDropdown ? 'add-to-dropdown-items open' : 'add-to-dropdown-items'}>
           <li>
