@@ -6,7 +6,7 @@ export default class TabContainer extends React.Component {
     super(props)
   }
   render() {
-    const { currentTabData, updateReads } = this.props
+    const { currentTabData, updateReads, read, wantToRead, currentlyReading } = this.props
     return (
       <React.Fragment>
         {currentTabData.length
@@ -14,6 +14,9 @@ export default class TabContainer extends React.Component {
           <BookList
             books={currentTabData}
             updateReads={updateReads}
+            read={read}
+            wantToRead={wantToRead}
+            currentlyReading={currentlyReading}
           />
           :
           <h2>No Books added yet</h2>

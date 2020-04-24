@@ -46,11 +46,9 @@ body {
 }
 
 .loading-container {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: fixed;
+  top: 40%;
+  left: 42.5%;
 }
 
 .container {
@@ -115,18 +113,8 @@ body {
  .find-books {
   display: flex;
   justify-content: space-between;
-  margin: 30px 20px;
+  margin: 30px 20px 0;
  }
-
- .book-list a {
-   color: #000;
-   text-decoration: none;
- }
-
- .book-list h3 {
-  font-size: 1.35rem;
-  margin: .75rem 0;
-}
 
  .find-books-categories {
   font-size: 1.1rem;
@@ -147,9 +135,25 @@ body {
    margin-left: 10px;
  }
 
+ .book-list-container {
+   margin: 0 20px;
+ }
+
 .book-list {
   display: flex;
   flex-wrap: wrap;
+  padding: 0;
+  margin: 30px 0;
+}
+
+.book-list a {
+  color: #000;
+  text-decoration: none;
+}
+
+.book-list h3 {
+ font-size: 1.35rem;
+ margin: .75rem 0;
 }
 
 .book-info {
@@ -187,7 +191,7 @@ body {
   opacity: 0.75;
 }
 
-.add-to-dropdown-button:hover {
+.add-to-dropdown.open .add-to-dropdown-button, .add-to-dropdown-button:hover {
   opacity: 1;
 }
 
@@ -202,16 +206,45 @@ body {
 }
 
 .add-to-dropdown-items {
-  background-color: white;
+  background-color: #FDF7EC;
   display: none;
   padding: 0;
   position: absolute;
-  top: 95%;
-  right: 95%;
-  width: 100%;
+  top: 90%;
+  right: 93%;
+  width: 80%;
+  border-radius: 5%;
+  border: 1px solid #737373;
 }
 
-.add-to-dropdown-items.open {
+.add-to-dropdown.open .add-to-dropdown-items {
   display: block;
+}
+
+.add-to-dropdown-items li {
+  list-style: none;
+  border-bottom: 1px solid #737373;
+  color: #342103;
+}
+
+.add-to-dropdown-items li a {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    padding: 0.25rem;
+}
+
+.add-to-dropdown-items li .in-list:after {
+  content: '✓';
+  position: absolute;
+  left: 85%;
+}	
+
+.add-to-dropdown-items li a:hover {
+  color: #E56500;
+}
+
+.add-to-dropdown-items li:last-of-type {
+  border-bottom: none;
 }
 

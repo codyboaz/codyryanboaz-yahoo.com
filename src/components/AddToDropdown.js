@@ -8,6 +8,7 @@ export default class AddToDropdown extends React.Component {
     }
 
     this.updateShowDropdown = this.updateShowDropdown.bind(this)
+    this.bookIsInCategory = this.bookIsInCategory.bind(this)
   }
 
   updateShowDropdown() {
@@ -18,37 +19,44 @@ export default class AddToDropdown extends React.Component {
     })
   }
 
+  bookIsInCategory(book, category) {
+    return (category.findIndex((item) => item.title === book.title) > -1)
+  }
+
   render() {
     const { showDropdown } = this.state
-    const { book, updateReads } = this.props
+    const { book, updateReads, read, wantToRead, currentlyReading } = this.props
     return (
-      <React.Fragment>
+      <div className={showDropdown ? 'add-to-dropdown open' : 'add-to-dropdown'}>
         <button
           className='add-to-dropdown-button'
           onClick={this.updateShowDropdown}
           aria-label='Add book to reading list'
         ></button>
-        <ul className={showDropdown ? 'add-to-dropdown-items open' : 'add-to-dropdown-items'}>
+        <ul className='add-to-dropdown-items'>
           <li>
             <a
+              className={this.bookIsInCategory(book, currentlyReading) ? 'in-list' : null}
               href='#'
               onClick={() => updateReads('currentlyReading', book, event)}
             >Currently Reading</a>
           </li>
           <li>
             <a
+              className={this.bookIsInCategory(book, wantToRead) ? 'in-list' : null}
               href='#'
               onClick={() => updateReads('wantToRead', book, event)}
             >Want To Read</a>
           </li>
           <li>
             <a
+              className={this.bookIsInCategory(book, read) ? 'in-list' : null}
               href='#'
               onClick={() => updateReads('read', book, event)}
             >Read</a>
           </li>
         </ul>
-      </React.Fragment>
+      </div>
     )
   }
 }

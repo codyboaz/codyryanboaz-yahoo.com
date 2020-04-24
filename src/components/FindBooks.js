@@ -24,7 +24,7 @@ export default class FindBooks extends React.Component {
   }
 
   render() {
-    const { updateBooks, updateReads, categories, currentCategory, books } = this.props
+    const { updateBooks, updateReads, categories, currentCategory, books, read, wantToRead, currentlyReading } = this.props
     const bookList = this.state.searchValue ? { [currentCategory]: this.searchBookList(books[currentCategory]) } : books
     return (
       <React.Fragment>
@@ -68,6 +68,9 @@ export default class FindBooks extends React.Component {
             books={bookList}
             currentCategory={currentCategory}
             updateReads={updateReads}
+            read={read}
+            wantToRead={wantToRead}
+            currentlyReading={currentlyReading}
           />
         )}
       </React.Fragment>

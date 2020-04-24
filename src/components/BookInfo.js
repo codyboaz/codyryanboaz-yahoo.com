@@ -1,5 +1,6 @@
 import React from 'react'
 import { fetchBookInfo } from '../utils/api'
+import Loading from './Loading'
 
 export default class BookInfo extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class BookInfo extends React.Component {
 
   render() {
     if (this.state.status === 'loading') {
-      return <h1>Loading</h1>
+      return <Loading />
     }
     if (!this.state.bookInfoFound) {
       return <h1>{this.state.bookInfo.items[0].volumeInfo.title}</h1>

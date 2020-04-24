@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom'
 import Loading from './components/Loading'
 import Nav from './components/Nav'
 import Tabs from './components/Tabs'
-import FindBooks from './components/FindBooks'
-import TabContent from './components/TabContent'
-import BookInfo from './components/BookInfo'
 import { fetchBooks, fetchCategories } from './utils/api'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './styles.css'
+
+const FindBooks = React.lazy(() => import('./components/FindBooks'))
+const TabContent = React.lazy(() => import('./components/TabContent'))
+const BookInfo = React.lazy(() => import('./components/BookInfo'))
 
 class App extends React.Component {
   constructor(props) {
@@ -142,11 +143,11 @@ class App extends React.Component {
     if (this.state.status === 'error') {
       return <h1>Error fetching data</h1>
     }
-    const { categories, currentCategory, books, currentTab, tabs } = this.state
+    const { categories, currentCategory, books, currentTab, tabs, read, wantToRead, currentlyReading } = this.state
     const currentTabData = this.getTabData()
-
     return (
       <Router>
+
         <div className='container'>
           <Nav />
           <Tabs
@@ -154,26 +155,36 @@ class App extends React.Component {
             currentTab={currentTab}
             updateCurrentTab={this.updateCurrentTab}
           />
-          <Route
-            exact path='/'
-            component={() => (
-              currentTab === 'find'
-                ?
-                <FindBooks
-                  updateBooks={this.updateBooks}
-                  updateReads={this.updateReads}
-                  categories={categories}
-                  currentCategory={currentCategory}
-                  books={books}
-                />
-                :
-                <TabContent
-                  currentTabData={currentTabData}
-                  updateReads={this.updateReads}
-                />
-            )}
-          />
-          <Route path='/book-info' component={BookInfo} />
+          <React.Suspense fallback={<Loading />}>
+            <Switch>
+              <Route
+                exact path='/'
+                component={() => (
+                  currentTab === 'find'
+                    ?
+                    <FindBooks
+                      updateBooks={this.updateBooks}
+                      updateReads={this.updateReads}
+                      categories={categories}
+                      currentCategory={currentCategory}
+                      books={books}
+                      read={read}
+                      wantToRead={wantToRead}
+                      currentlyReading={currentlyReading}
+                    />
+                    :
+                    <TabContent
+                      currentTabData={currentTabData}
+                      updateReads={this.updateReads}
+                      read={read}
+                      wantToRead={wantToRead}
+                      currentlyReading={currentlyReading}
+                    />
+                )}
+              />
+              <Route path='/book-info' component={BookInfo} />
+            </Switch>
+          </React.Suspense>
         </div>
       </Router>
     )
