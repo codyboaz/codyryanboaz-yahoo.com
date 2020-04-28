@@ -80,25 +80,19 @@ body {
 .tabs {
   display: flex;
   margin: 0;
-  padding: 0;
+  padding: 1px 0;
+  border-bottom: 1px solid #737373;
 }
 
 .tab-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-basis: 25%;
   height: 50px;
   font-size: 1.25rem;
   list-style: none;
-  border: 1px solid #342103;
-}
-
-.tab-item:not(:last-child) {
-  border-right: none;
 }
 
 .tab-item a {
+  display: block;
   line-height: 50px;
   width: 100%;
   text-align: center;
@@ -108,6 +102,11 @@ body {
 
  .tab-item a.active, .tab-item a:hover,  .tab-item a:focus {
   color: #E56500;
+ }
+
+ .tab-item a.active {
+  color: #E56500;
+  border-bottom: 2px solid #E56500;
  }
 
  .find-books {

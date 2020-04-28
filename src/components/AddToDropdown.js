@@ -8,7 +8,27 @@ export default class AddToDropdown extends React.Component {
     }
 
     this.updateShowDropdown = this.updateShowDropdown.bind(this)
+    this.closeDropdown = this.closeDropdown.bind(this)
     this.bookIsInCategory = this.bookIsInCategory.bind(this)
+  }
+
+  componentWillMount() {
+    document.addEventListener('click', this.closeDropdown)
+    document.addEventListener('keydown', this.closeDropdown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.closeDropdown)
+    document.addEventListener('keydown', this.closeDropdown)
+  }
+
+  closeDropdown(e) {
+    if (!e.target.classList.contains('add-to-dropdown-button') || e.keyCode === 27) {
+      this.setState({
+        showDropdown: false
+      })
+    }
+
   }
 
   updateShowDropdown() {
