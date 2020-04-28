@@ -12,11 +12,9 @@ export default class AddToDropdown extends React.Component {
   }
 
   updateShowDropdown() {
-    this.setState((prevState) => {
-      return {
-        showDropdown: !prevState.showDropdown
-      }
-    })
+    this.setState((prevState) => ({
+      showDropdown: !prevState.showDropdown
+    }))
   }
 
   bookIsInCategory(book, category) {

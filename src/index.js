@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Loading from './components/Loading'
 import Nav from './components/Nav'
 import Tabs from './components/Tabs'
+import { ThemeProvider } from './contexts/theme'
 import { fetchBooks, fetchCategories } from './utils/api'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './styles.css'
@@ -29,7 +30,14 @@ class App extends React.Component {
         { name: 'Want To Read', value: 'wantToRead' },
         { name: 'Read', value: 'read' }
       ],
-      currentTab: 'find'
+      currentTab: 'find',
+      // TODO: add light and dark mode to app.
+      theme: 'light',
+      toggleTheme: () => {
+        this.setState(({ theme }) => ({
+          theme: theme === 'light' ? 'dark' : 'light'
+        }))
+      }
     }
 
     this.getBooks = this.getBooks.bind(this)
@@ -75,14 +83,12 @@ class App extends React.Component {
         return
       }
     }
-    this.setState((prevState) => {
-      return {
-        [readType]: [
-          ...prevState[readType],
-          book
-        ]
-      }
-    })
+    this.setState((prevState) => ({
+      [readType]: [
+        ...prevState[readType],
+        book
+      ]
+    }))
   }
 
   updateCurrentTab(tabValue) {
@@ -104,15 +110,13 @@ class App extends React.Component {
               status: 'too-many-requests'
             })
           } else {
-            this.setState(({ books }) => {
-              return {
-                books: {
-                  ...books,
-                  [currentCategory]: booksData
-                },
-                currentCategory
-              }
-            })
+            this.setState(({ books }) => ({
+              books: {
+                ...books,
+                [currentCategory]: booksData
+              },
+              currentCategory
+            }))
           }
         })
     }
@@ -147,45 +151,46 @@ class App extends React.Component {
     const currentTabData = this.getTabData()
     return (
       <Router>
-
-        <div className='container'>
-          <Nav />
-          <Tabs
-            tabs={tabs}
-            currentTab={currentTab}
-            updateCurrentTab={this.updateCurrentTab}
-          />
-          <React.Suspense fallback={<Loading />}>
-            <Switch>
-              <Route
-                exact path='/'
-                component={() => (
-                  currentTab === 'find'
-                    ?
-                    <FindBooks
-                      updateBooks={this.updateBooks}
-                      updateReads={this.updateReads}
-                      categories={categories}
-                      currentCategory={currentCategory}
-                      books={books}
-                      read={read}
-                      wantToRead={wantToRead}
-                      currentlyReading={currentlyReading}
-                    />
-                    :
-                    <TabContent
-                      currentTabData={currentTabData}
-                      updateReads={this.updateReads}
-                      read={read}
-                      wantToRead={wantToRead}
-                      currentlyReading={currentlyReading}
-                    />
-                )}
-              />
-              <Route path='/book-info' component={BookInfo} />
-            </Switch>
-          </React.Suspense>
-        </div>
+        <ThemeProvider value={{ 'theme': this.state.theme, 'toggleTheme': this.state.toggleTheme }}>
+          <div className={`container ${this.state.theme}`}>
+            <Nav />
+            <Tabs
+              tabs={tabs}
+              currentTab={currentTab}
+              updateCurrentTab={this.updateCurrentTab}
+            />
+            <React.Suspense fallback={<Loading />}>
+              <Switch>
+                <Route
+                  exact path='/'
+                  component={() => (
+                    currentTab === 'find'
+                      ?
+                      <FindBooks
+                        updateBooks={this.updateBooks}
+                        updateReads={this.updateReads}
+                        categories={categories}
+                        currentCategory={currentCategory}
+                        books={books}
+                        read={read}
+                        wantToRead={wantToRead}
+                        currentlyReading={currentlyReading}
+                      />
+                      :
+                      <TabContent
+                        currentTabData={currentTabData}
+                        updateReads={this.updateReads}
+                        read={read}
+                        wantToRead={wantToRead}
+                        currentlyReading={currentlyReading}
+                      />
+                  )}
+                />
+                <Route path='/book-info' component={BookInfo} />
+              </Switch>
+            </React.Suspense>
+          </div>
+        </ThemeProvider>
       </Router>
     )
   }
