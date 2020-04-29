@@ -184,7 +184,7 @@ body {
   position: relative;
   height: 35px;
   width: 35px;
-  border-radius: 20px;
+  border-radius: 50px;
   border: 2px solid #342103;
   background: #FDF7EC;
   color: #342103;
@@ -199,15 +199,11 @@ body {
 .add-to-dropdown .add-to-dropdown-button:after {
   content: '+';
   font-family: serif;
-  position: absolute;
-  top: 15%;
-  left: 35%;
 }
 
 .add-to-dropdown.open .add-to-dropdown-button:after {
   content:'-';
   font-family: serif;
-  left: 40%;
 }
 
 .add-to-dropdown-items {
