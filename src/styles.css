@@ -184,7 +184,7 @@ body {
   position: relative;
   height: 35px;
   width: 35px;
-  border-radius: 50%;
+  border-radius: 20px;
   border: 2px solid #342103;
   background: #FDF7EC;
   color: #342103;
