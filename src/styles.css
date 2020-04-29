@@ -87,7 +87,7 @@ body {
 .tab-item {
   flex-basis: 25%;
   height: 50px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   list-style: none;
 }
 
@@ -111,22 +111,24 @@ body {
 
  .find-books {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   margin: 30px 20px 0;
  }
 
  .find-books-categories {
   font-size: 1.1rem;
+  width: 70%;
 }
 
  .find-books label {
    font-size: 1.1rem;
+   margin: 0.45rem 0;
  }
 
  .find-books-search {
   margin-left: 10px;
   height: 25px;
-  width: 200px;
+  width: 73%;
   font-size: 1.1rem;
  }
 
@@ -210,7 +212,7 @@ body {
   position: absolute;
   top: 90%;
   right: 93%;
-  width: 80%;
+  width: 155px;
   border-radius: 5%;
   border: 1px solid #737373;
 }
@@ -261,6 +263,22 @@ body {
     font-size: 1.25rem;
   }
 
+  .find-books {
+    flex-direction: row;
+    justify-content: space-between;
+   }
+
+   .find-books label {
+    margin: 0;
+  }
+
+  .find-books-categories {
+    width: auto;
+  }
+
+  .find-books-search {
+    width: 200px;
+   }
 }
 
 @media (min-width: 1024px) {
@@ -272,7 +290,6 @@ body {
     top: 76%;
     left: 72%;
   }
-
 }
 
 @media (min-width: 1445px) {
@@ -285,10 +302,8 @@ body {
     font-size: 1.35rem;
    }
 
-
-.add-to-dropdown {
-  top: 80%;
-  left: 80%;
-}
-
+  .add-to-dropdown {
+    top: 80%;
+    left: 80%;
+  }
 }
