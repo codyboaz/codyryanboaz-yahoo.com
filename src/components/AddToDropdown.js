@@ -12,7 +12,7 @@ export default class AddToDropdown extends React.Component {
     this.bookIsInCategory = this.bookIsInCategory.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('click', this.closeDropdown)
     document.addEventListener('keydown', this.closeDropdown)
   }
