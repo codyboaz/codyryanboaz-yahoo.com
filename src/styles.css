@@ -87,7 +87,7 @@ body {
 .tab-item {
   flex-basis: 25%;
   height: 50px;
-  font-size: 1.25rem;
+  font-size: 0.8rem;
   list-style: none;
 }
 
@@ -151,12 +151,12 @@ body {
 }
 
 .book-list h3 {
- font-size: 1.35rem;
+ font-size: 1.15rem;
  margin: .75rem 0;
 }
 
 .book-info {
-  flex-basis: 33.33%;
+  flex-basis: 100%;
   list-style: none;
   text-align: center;
   position: relative;
@@ -164,16 +164,15 @@ body {
 }
 
 .book-list img {
-  height: 495px;
-  width: 328px;
+  height: 377px;
+  width: 250px;
 }
 
 .add-to-dropdown {
   position: absolute;
-  top: 445px;
-  left: 310px;
+  top: 75%;
+  left: 65%;
   text-align: left;
-  width: 50%;
   margin: 0;
   float: right;
   z-index: 2;
@@ -247,3 +246,49 @@ body {
   border-bottom: none;
 }
 
+
+@media (min-width: 640px) {
+  .book-info {
+    flex-basis: 50%;
+  }
+
+  .add-to-dropdown {
+    top: 76%;
+    left: 69%;
+  }
+
+  .tab-item {
+    font-size: 1.25rem;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .book-info {
+    flex-basis: 33.33%;
+  }
+
+  .add-to-dropdown {
+    top: 76%;
+    left: 72%;
+  }
+
+}
+
+@media (min-width: 1445px) {
+  .book-list img {
+    height: 495px;
+    width: 328px;
+  }
+
+  .book-list h3 {
+    font-size: 1.35rem;
+   }
+
+
+.add-to-dropdown {
+  top: 80%;
+  left: 80%;
+}
+
+}
