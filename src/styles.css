@@ -181,10 +181,10 @@ body {
 }
 
 .add-to-dropdown-button {
-  position: relative;
+  font-family: serif;
   height: 35px;
   width: 35px;
-  border-radius: 50px;
+  border-radius: 50%;
   border: 2px solid #342103;
   background: #FDF7EC;
   color: #342103;
@@ -194,16 +194,6 @@ body {
 
 .add-to-dropdown.open .add-to-dropdown-button, .add-to-dropdown-button:hover {
   opacity: 1;
-}
-
-.add-to-dropdown .add-to-dropdown-button:after {
-  content: '+';
-  font-family: serif;
-}
-
-.add-to-dropdown.open .add-to-dropdown-button:after {
-  content:'-';
-  font-family: serif;
 }
 
 .add-to-dropdown-items {

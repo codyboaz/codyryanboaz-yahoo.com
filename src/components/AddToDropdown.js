@@ -50,7 +50,7 @@ export default class AddToDropdown extends React.Component {
           className='add-to-dropdown-button'
           onClick={this.updateShowDropdown}
           aria-label='Add book to reading list'
-        ></button>
+        >{showDropdown ? '-' : '+'}</button>
         <ul className='add-to-dropdown-items'>
           <li>
             <a
