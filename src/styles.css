@@ -181,6 +181,7 @@ body {
 }
 
 .add-to-dropdown-button {
+  position: relative;
   height: 35px;
   width: 35px;
   border-radius: 50%;
@@ -195,14 +196,18 @@ body {
   opacity: 1;
 }
 
-.add-to-dropdown-button:after {
-  content:'+';
+.add-to-dropdown .add-to-dropdown-button:after {
+  content: '+';
   font-family: serif;
+  position: absolute;
+  top: 15%;
+  left: 35%;
 }
 
-.add-to-dropdown-button.open:after {
+.add-to-dropdown.open .add-to-dropdown-button:after {
   content:'-';
   font-family: serif;
+  left: 40%;
 }
 
 .add-to-dropdown-items {
